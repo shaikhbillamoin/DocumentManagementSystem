@@ -1,0 +1,121 @@
+﻿@model DocumentManagementSystem.ViewModels.DocumentVM
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Edit Document</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="\">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Document" asp-action="Index">Document</a></li>
+                    <li class="breadcrumb-item active">Edit Document</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row center">
+            <!-- left column -->
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit</h3>
+                    </div>
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Subject" class="control-label"></label>
+                                <input asp-for="Subject" class="form-control" />
+                                <span hidden="hidden" asp-validation-for="Subject" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DocumentTypeID" class="control-label"></label>
+                                <select asp-for="DocumentTypeID" class="form-control" asp-items="Html.GetEnumSelectList<DocumentType>()">
+                                    <option selected="selected" value="">Please select</option>
+                                </select>
+                                <span hidden="hidden" asp-validation-for="DocumentTypeID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DocumentDate" class="control-label"></label>
+                                <input asp-for="DocumentDate" class="form-control" type="date" />
+                                <span hidden="hidden" asp-validation-for="DocumentDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SerialNumber" class="control-label"></label>
+                                <input asp-for="SerialNumber" class="form-control" inputmode="numeric" maxlength="2" placeholder="00" />
+                                <span hidden="hidden" asp-validation-for="SerialNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label"></label>
+                                <input asp-for="Year" class="form-control" inputmode="numeric" maxlength="4" placeholder="0000" />
+                                <span hidden="hidden" asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Remarks" class="control-label"></label>
+                                <textarea asp-for="Remarks" class="form-control"></textarea>
+                                <span hidden="hidden" asp-validation-for="Remarks" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="fileupload" style="display:none">
+                                    <label asp-for="InputFile" class="control-label"></label>
+                                    <div class="custom-file">
+                                        <input asp-for="InputFile" class="custom-file-input" />
+                                        <label class="custom-file-label" asp-for="InputFile">Choose file</label>
+                                    </div>
+                                    <span hidden="hidden" asp-validation-for="InputFile" class="text-danger"></span>
+                                </div><br />
+                                <div class="row mb-2">
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-secondary btn-block" asp-action="DownloadFile" asp-route-id="@Model.ID"><i class="fa fa-download"></i>&nbsp;Download</a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-default btn-block float-right btnupload">Upload File</a>
+                                        <input type="hidden" asp-for="IsFileUpload" class="IsFileUpload" value="False" />
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" asp-for="ID" />
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a class="btn btn-default float-right" asp-action="Index">Back to List</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        bsCustomFileInput.init();
+
+        $(".btnupload").click(function () {
+            if ($(".fileupload").is(":visible")) {
+                $(".fileupload").hide();
+                $(".IsFileUpload").val('False');
+                $(this).text("Upload File");
+            } else {
+                $(".fileupload").show();
+                $(".IsFileUpload").val('True');
+                $(this).text("Hide Upload File");
+            }
+        });
+    });
+</script>

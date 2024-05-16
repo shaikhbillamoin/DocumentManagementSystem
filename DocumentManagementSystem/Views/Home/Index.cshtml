@@ -1,0 +1,135 @@
+﻿@model IEnumerable<DocumentManagementSystem.ViewModels.DocumentVM>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Welcome</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Welcome Page</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-image"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Images</span>
+                        <span class="info-box-number">@ViewBag.ImageCount</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-file-pdf"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">PDF</span>
+                        <span class="info-box-number">@ViewBag.PDFCount</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-file-excel"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Excel</span>
+                        <span class="info-box-number">@ViewBag.ExcelCount</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-file-word"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Word</span>
+                        <span class="info-box-number">@ViewBag.WordCount</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <!-- PRODUCT LIST -->
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recently Added Documents</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <ul class="products-list product-list-in-card pl-2 pr-2">
+                            @foreach (var item in Model.OrderByDescending(x => x.ID).Take(5))
+                            {
+                                <li class="item">
+                                    <div class="product-img">
+                                        <img src="~/img/SiteLogo2.jpg" alt="Product Image" class="img-size-50">
+                                    </div>
+                                    <div class="product-info">
+                                        <a asp-controller="Document" asp-action="Details" asp-route-id="@item.ID" class="product-title">
+                                            @item.Subject
+                                            <span class="badge bg-green">@item.DocumentTypeName</span>
+                                            <span class="badge badge-warning float-right">@item.Year</span>
+                                        </a>
+                                        <span class="product-description">
+                                            @item.Remarks
+                                        </span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <a asp-controller="Document" asp-action="Create" class="btn btn-sm btn-info float-left">Add New Document</a>
+                        <a asp-controller="Document" asp-action="Index" class="btn btn-sm btn-secondary float-right">View All Documents</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+
+    </div>
+</section>

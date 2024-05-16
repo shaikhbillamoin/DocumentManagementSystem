@@ -1,0 +1,109 @@
+﻿@model DocumentManagementSystem.ViewModels.DocumentVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Add New Document</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="\">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Document" asp-action="Index">Document</a></li>
+                    <li class="breadcrumb-item active">Add New Document</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row center">
+            <!-- left column -->
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add</h3>
+                    </div>
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div asp-validation-summary="All" class="alert alert-danger" role="alert" id="alert"></div>
+                            <div class="form-group">
+                                <label asp-for="Subject" class="control-label"></label>
+                                <input asp-for="Subject" class="form-control" />
+                                <span hidden="hidden" asp-validation-for="Subject" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DocumentTypeID" class="control-label"></label>
+                                <select asp-for="DocumentTypeID" class="form-control" asp-items="Html.GetEnumSelectList<DocumentType>()">
+                                    <option selected="selected" value="">Please select</option>
+                                </select>
+                                <span hidden="hidden" asp-validation-for="DocumentTypeID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DocumentDate" class="control-label"></label>
+                                <input asp-for="DocumentDate" class="form-control" type="date" />
+                                <span hidden="hidden" asp-validation-for="DocumentDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SerialNumber" class="control-label"></label>
+                                <input asp-for="SerialNumber" class="form-control numeric" inputmode="numeric" maxlength="2" placeholder="00" />
+                                <span hidden="hidden" asp-validation-for="SerialNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label"></label>
+                                <input asp-for="Year" class="form-control numeric" inputmode="numeric" maxlength="4" placeholder="0000" />
+                                <span hidden="hidden" asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Remarks" class="control-label"></label>
+                                <textarea asp-for="Remarks" class="form-control"></textarea>
+                                <span hidden="hidden" asp-validation-for="Remarks" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InputFile" class="control-label"></label>
+                                <div class="custom-file">
+                                    <input asp-for="InputFile" class="custom-file-input" />
+                                    <label class="custom-file-label" asp-for="InputFile">Choose file</label>
+                                </div>
+                                <span hidden="hidden" asp-validation-for="InputFile" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a class="btn btn-default float-right" asp-action="Index">Back to List</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        bsCustomFileInput.init();
+
+        if ($('#alert').is(".validation-summary-valid")) {
+            $('#alert').hide();
+        } else {
+            $('#alert').show();
+        }
+
+        $(".numeric").keyup(function () {
+            if (!jQuery.isNumeric($(this).val()) || this.value.indexOf('.') >= 0)
+                $(this).val('');
+        });
+
+
+    });
+</script>
