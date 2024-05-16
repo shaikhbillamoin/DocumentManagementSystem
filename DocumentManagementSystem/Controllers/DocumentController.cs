@@ -129,7 +129,8 @@ namespace DocumentManagementSystem.Controllers
                 Remarks = document.Remarks,
                 SerialNumber = document.SerialNumber,
                 Year = document.Year,
-                FileName = document.DocumentContent != null ? document.DocumentContent.FileName : null
+                FileName = document.DocumentContent != null ? document.DocumentContent.FileName : null,
+                IsFileUpload = false
             };
             return View(documentvm);
         }
